@@ -10,19 +10,20 @@
             http://www.springframework.org/schema/context/spring-context.xsd
             http://www.springframework.org/schema/aop
             http://www.springframework.org/schema/aop/spring-aop.xsd "
-       >
+>
 
 
     <context:component-scan base-package="com.yang.resteasy.res"/>
 
-<bean id="jettyServer" class="com.yang.web.server.jetty.JettyServerHelper"/>
+    <!--<bean id="personService" class="com.yang.resteasy.res.Person"/>-->
+
+    <bean id="jettyServer" class="com.yang.web.server.jetty.JettyServerHelper"/>
 
     <bean id="restEasyIntegrationHelper" class="com.yang.resteasy.spring.YangWsSpringBeanProcessor">
         <constructor-arg>
-            <bean factory-bean="jettyServer" factory-method="getRestDispatcher"/>
+            <bean factory-bean="jettyServer" factory-method="getResteasyDeployment"/>
         </constructor-arg>
     </bean>
 
-    <bean id="personService" class="com.yang.resteasy.res.Person"/>
 
 </beans>

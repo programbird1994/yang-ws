@@ -18,6 +18,11 @@ public class JettyServerHelper implements InitializingBean {
     private Dispatcher restDispatcher;
     private ResteasyDeployment resteasyDeployment;
 
+    private static final String RESTEASY_USE_BUILTIN_PROVIDERS = "resteasy.use.builtin.providers";
+    private static final String RESTEASY_SERVLET_MAPPING_PREFIX = "resteasy.servlet.mapping.prefix";
+    private static final String RESTEASY_MEDIA_TYPES_MAPPINGS= "resteasy.media.types.mappings";
+    private static final String RESTEASY_MEDIA_TYPES_MAPPINGS_VALUE= "txt: text/plain, html: text/html, xml: applicaTion/xml, json: application.jso";
+
     public void afterPropertiesSet() throws Exception {
         initServer();
     }
@@ -27,11 +32,10 @@ public class JettyServerHelper implements InitializingBean {
         HandlerList handlerList = new HandlerList();
 
         ServletContextHandler servletContextHandler = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        servletContextHandler.setInitParameter("resteasy.use.builtin.providers","true");
-        servletContextHandler.setInitParameter("resteasy.servlet.mapping.prefix","/res");
-        servletContextHandler.setInitParameter("resteasy.media.types.mappings","txt: text/plain, html: text/html, xml: applicaTion/xml, json: application.json");
-        /*servletContextHandler.setInitParameter("resteasy.providers",DefaultExce)*/
-        servletContextHandler.setContextPath("yangws");
+        servletContextHandler.setInitParameter(RESTEASY_USE_BUILTIN_PROVIDERS,"true");
+        servletContextHandler.setInitParameter(RESTEASY_SERVLET_MAPPING_PREFIX,"res");
+        servletContextHandler.setInitParameter(RESTEASY_MEDIA_TYPES_MAPPINGS, RESTEASY_MEDIA_TYPES_MAPPINGS_VALUE);
+        servletContextHandler.setContextPath("/yangws");
         servletContextHandler.setClassLoader(Thread.currentThread().getContextClassLoader());
 
         ResteasyBootstrap rb = new ResteasyBootstrap();
